@@ -268,14 +268,17 @@ export default class ReactBubbleChartD3 {
         .attr('r', d => d.r)
         .style('opacity', 1);
       // intialize new labels
-      labels.enter().append('div')
+      let node = labels.enter().append('div')
         .attr('class', d => {
           var size;
           if (2*d.r < this.smallDiameter) size = 'small';
           else if (2*d.r < this.mediumDiameter) size = 'medium';
           else size = 'large';
           return 'bubble-label ' + size
-        })
+        });
+      if (props.safeLabel) node = node.text(d => d.data.displayText || d.data._id)
+      else node = node.html(d => d.data.displayText || d.data._id)
+      node
         .text(d => d.data.displayText || d.data._id)
         .on('click', (d, i) => {d3.event.stopPropagation(); props.onClick(d)})
         .on('mouseover', this._tooltipMouseOver.bind(this, color, el))

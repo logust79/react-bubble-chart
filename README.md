@@ -71,6 +71,7 @@ class BubbleChart extends React.Component {
       className="my-cool-chart"
       colorLegend={colorLegend}
       data={data}
+      safeLabel={true}
       selectedColor="#737373"
       selectedTextColor="#d9d9d9"
       fixedDomain={{min: -1, max: 1}}
@@ -128,6 +129,9 @@ The data objects themselves look like:
 
 If using the tooltip feature (more on that later), you might include more
 properties in this object.
+
+### `safeLabel` (default to true)
+If set to `true`, will use `.text()` to render node's displayText, else will use `.html()`.
 
 ### `colorLegend` (optional)
 
