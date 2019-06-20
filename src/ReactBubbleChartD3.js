@@ -279,7 +279,6 @@ export default class ReactBubbleChartD3 {
       if (props.safeLabel) node = node.text(d => d.data.displayText || d.data._id)
       else node = node.html(d => d.data.displayText || d.data._id)
       node
-        .text(d => d.data.displayText || d.data._id)
         .on('click', (d, i) => {d3.event.stopPropagation(); props.onClick(d)})
         .on('mouseover', this._tooltipMouseOver.bind(this, color, el))
         .on('mouseout', this._tooltipMouseOut.bind(this))
