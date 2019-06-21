@@ -47,6 +47,7 @@ export default class ReactBubbleChartD3 {
     this.fontSizeFactor = props.fontSizeFactor;
     this.duration = props.duration === undefined ? 500 : props.duration;
     this.delay = props.delay === undefined ? 7 : props.delay;
+    this.callback = props.callback || (() => undefined);
 
     // create an <svg> and <html> element - store a reference to it for later
     this.svg = d3
@@ -209,7 +210,7 @@ export default class ReactBubbleChartD3 {
     );
     this.configureLegend(el, props);
     this.configureTooltip(el, props);
-
+    this.callback = props.callback;
     const data = props.data;
     if (!data) return;
 
@@ -270,7 +271,7 @@ export default class ReactBubbleChartD3 {
       .style("opacity", 1)
       .style("fill", d =>
         d.selected ? this.selectedColor : color(d.data.colorValue)
-      );
+      ).call(this.callback);
     // for the labels we transition their height, width, left, top, and color
     labels
       .on("mouseover", this._tooltipMouseOver.bind(this, color, el))
@@ -294,7 +295,6 @@ export default class ReactBubbleChartD3 {
       })
       // we can pass in a fontSizeFactor here to set the label font-size as a factor of its corresponding circle's radius; this overrides CSS font-size styles set with the small, medium and large classes
       .style("font-size", d => (fontFactor ? fontFactor * d.r + "px" : null));
-
     // enter - only applies to incoming elements (once emptying data)
     if (this.bubble(nodes).descendants().length) {
       // initialize new circles
@@ -321,7 +321,8 @@ export default class ReactBubbleChartD3 {
         .attr("transform", d => "translate(" + d.x + "," + d.y + ")")
         .attr("r", d => d.r * 0.9)
         .attr("stroke-width", d => d.r * 0.2)
-        .style("opacity", 1);
+        .style("opacity", 1)
+        .call(this.callback);
       // intialize new labels
       let node = labels
         .enter()

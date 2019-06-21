@@ -161,6 +161,7 @@ class ReactBubbleChart extends React.Component {
     return {
       data: this.props.data,
       safeLabel: this.props.safeLabel,
+      callback: this.props.callback,
       colorLegend: this.props.colorLegend,
       fixedDomain: this.props.fixedDomain,
       selectedColor: this.props.selectedColor,
