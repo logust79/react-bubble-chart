@@ -269,8 +269,7 @@ export default class ReactBubbleChartD3 {
       .style("opacity", 1)
       .style("fill", d =>
         d.selected ? this.selectedColor : color(d.data.colorValue)
-      )
-      .styple("stroke");
+      );
     // for the labels we transition their height, width, left, top, and color
     labels
       .on("mouseover", this._tooltipMouseOver.bind(this, color, el))
