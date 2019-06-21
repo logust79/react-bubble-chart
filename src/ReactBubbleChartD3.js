@@ -265,7 +265,8 @@ export default class ReactBubbleChartD3 {
       .duration(duration)
       .delay((d, i) => i * delay)
       .attr("transform", d => "translate(" + d.x + "," + d.y + ")")
-      .attr("r", d => d.r)
+      .attr("r", d => d.r * 0.9)
+      .attr("stroke-width", d => d.r * 0.2)
       .style("opacity", 1)
       .style("fill", d =>
         d.selected ? this.selectedColor : color(d.data.colorValue)
@@ -312,10 +313,14 @@ export default class ReactBubbleChartD3 {
         .style("fill", d =>
           d.selected ? this.selectedColor : color(d.data.colorValue)
         )
+        .attr("stroke", d => 
+          d.selected ? this.selectedColor : color(d.data.colorValue)
+        )
         .transition()
         .duration(duration * 1.2)
         .attr("transform", d => "translate(" + d.x + "," + d.y + ")")
-        .attr("r", d => d.r)
+        .attr("r", d => d.r * 0.9)
+        .attr("stroke-width", d => d.r * 0.2)
         .style("opacity", 1);
       // intialize new labels
       let node = labels
