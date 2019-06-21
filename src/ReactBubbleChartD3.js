@@ -305,8 +305,10 @@ export default class ReactBubbleChartD3 {
         .append("circle")
         .attr("transform", d => "translate(" + d.x + "," + d.y + ")")
         .attr("r", 0)
-        .attr("class", d => (d.children ? "bubble" : "bubble leaf"))
-        .classed("selected", d => (d.selected ? true : false))
+        .attr("class", d => {
+          const classConstant = d.children ? ["bubble"] : ["bubble leaf"];
+          return [...(d.class || []), ...classConstant].join(" ");
+        })
         .style("fill", d =>
           d.selected ? this.selectedColor : color(d.data.colorValue)
         )
