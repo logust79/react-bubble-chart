@@ -122,7 +122,7 @@ export default class ReactBubbleChartD3 {
       (el.offsetHeight -
         20 -
         (this.colorLegend.length - 1) * this.legendSpacing) /
-        this.colorLegend.length,
+      this.colorLegend.length,
       18
     );
     const legendHeight =
@@ -268,6 +268,10 @@ export default class ReactBubbleChartD3 {
       .attr("transform", d => "translate(" + d.x + "," + d.y + ")")
       .attr("r", d => d.r * 0.9)
       .attr("stroke-width", d => d.r * 0.2)
+      .attr("class", d => {
+        const classConstant = d.children ? ["bubble"] : ["bubble leaf"];
+        return [...(d.data.class || []), ...classConstant].join(" ");
+      })
       .style("opacity", 1)
       .style("fill", d =>
         d.selected ? this.selectedColor : color(d.data.colorValue)
@@ -300,7 +304,7 @@ export default class ReactBubbleChartD3 {
       // initialize new circles
       circles
         .enter()
-        .filter(function(d) {
+        .filter(function (d) {
           return !d.children;
         })
         .append("circle")
@@ -313,7 +317,7 @@ export default class ReactBubbleChartD3 {
         .style("fill", d =>
           d.selected ? this.selectedColor : color(d.data.colorValue)
         )
-        .attr("stroke", d => 
+        .attr("stroke", d =>
           d.selected ? this.selectedColor : color(d.data.colorValue)
         )
         .transition()
@@ -480,5 +484,5 @@ export default class ReactBubbleChartD3 {
   }
 
   /** Any necessary cleanup */
-  destroy(el) {}
+  destroy(el) { }
 }
